@@ -1,0 +1,11 @@
+<section class="signup-page flex column align-center">
+    <img class="bitcoin-img" src="./assets/img/bitcoin.png" alt="bitcoin-img" />
+    <form (submit)="onSignUp()" class="flex column align-center">
+        <div class="signup-form flex column align-center">
+            <label htmlFor="name">Please enter your name:</label>
+            <input [(ngModel)]="name" name="name" type="text" />
+            <span class="validation-error">Name is required</span>
+        </div>
+        <button type="submit" class="save-btn btn">Start</button>
+    </form>
+</section>

@@ -1,0 +1,5 @@
+<ul class="contact-list clean-list">
+    <a *ngFor="let contact of contacts" [routerLink]="['/contact',contact._id]" routerLinkActive="router-link-preview">
+        <contact-preview [contact]="contact"></contact-preview>
+    </a>
+</ul>

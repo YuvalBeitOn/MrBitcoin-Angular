@@ -1,0 +1,41 @@
+<section class="home-page-conatiner">
+    <section class="home-page flex column align-center justify-center">
+        <h2 class="title">Buy and sell Bitcoins</h2>
+        <div class="desc">Mr Bitcoin is the easiest place to buy, sell, and manage your Bitcoins.</div>
+        <form (submit)="getStarted()">
+            <input placeholder="Enter Full Name" type="text" name="name" [(ngModel)]="name" />
+            <button type="submit">Get Started</button>
+        </form>
+    </section>
+    <div class="home-page-chart flex justify-center align-center">
+        <div class="market-price-chart">
+            <h2>Market Price</h2>
+            <h4>The average USD market price across major bitcoin exchanges.</h4>
+            <chart [data]="marketPrices"></chart>
+        </div>
+    </div>
+    <div class="imgs-section flex space-around align-center container">
+        <div class="img-container flex column align-center">
+            <img src="./assets/img/img1.png" alt="" />
+            <div class="desc">Create an account</div>
+        </div>
+        <div class="img-container flex column align-center">
+            <img src="./assets/img/img2.png" alt="" />
+            <div class="desc">Connect your coins</div>
+        </div>
+        <div class="img-container flex column align-center">
+            <img src="./assets/img/img3.png" alt="" />
+            <div class="desc">Start buying & selling</div>
+        </div>
+    </div>
+    <converter></converter>
+    <section class="bg-img-section">
+        <img class="bg-img" src="./assets/img/bg-img.png" alt="bg-img" />
+        <div class="bg-img-txt">
+            <p class="par1">Earn up to $200 worth of Bitcoins</p>
+            <p class="par2">Discover how specific bitcoins work — and get a bit of each bitcoin to try out for yourself.
+            </p>
+            <a routerLink="/signup" class="start-btn">Start earning</a>
+        </div>
+    </section>
+</section>

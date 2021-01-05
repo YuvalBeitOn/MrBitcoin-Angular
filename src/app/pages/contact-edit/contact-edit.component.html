@@ -1,0 +1,26 @@
+<section class="contact-edit-page">
+    <form #form="ngForm" (ngSubmit)="submitForm()" class="contact-edit-form flex column align-center">
+        <!-- {img} -->
+        <div class="contact-form flex align-center">
+            <i class="fas fa-user fa-icon"></i>
+            <input type="text" [(ngModel)]="contact.name" name="name" placeholder="Enter Full Name"
+                spellCheck="false" />
+        </div>
+        <span class="validation-error" *ngIf="validateName">{{validateName}}</span>
+        <div class="contact-form flex align-center">
+            <i class="fas fa-phone fa-icon"></i>
+            <input type="text" [(ngModel)]="contact.phone" name="phone" placeholder="Enter Phone Number"
+                spellCheck="false" />
+        </div>
+        <span class="validation-error" *ngIf="validatePhone">{{validatePhone}}</span>
+        <div class="contact-form flex align-center">
+            <i class="far fa-envelope fa-icon"></i>
+            <input type="email" name="email" [(ngModel)]="contact.email" placeholder="Entar Email" spellCheck="false" />
+        </div>
+        <span class="validation-error" *ngIf="validateEmail">{{validateEmail}}</span>
+        <div class="action-btns flex space-between">
+            <button type="submit" class="save-btn">Save</button>
+            <a routerLink="/contacts">Cancel</a>
+        </div>
+    </form>
+</section>

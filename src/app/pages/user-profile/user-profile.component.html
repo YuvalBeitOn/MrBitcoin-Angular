@@ -1,0 +1,20 @@
+<section class="user-profile flex column justify-center align-center" *ngIf="currUser; else loading">
+    <div class="user-profile-container flex space-between">
+        <user-info user="user" rate="rate"></user-info>
+        <div class="move-list-container">
+            <move-list [moves]="lastUserMoves" [isInContact]="false"></move-list>
+        </div>
+    </div>
+    <div class="chart-container flex column align-center mb40" *ngIf="userMoves.length">
+        <h2 class="mb8">Bitcoin transfer</h2>
+        <h4 class="mb20">My Bitcoin transfers in the last month</h4>
+        <chart class="user-chart" [data]="userMoves"></chart>
+    </div>
+</section>
+
+
+<ng-template #loading>
+    <div class="loading-container flex justify-center align-center">
+        <img class="loading" src="./assets/img/loader.gif" alt="loading">
+    </div>
+</ng-template>

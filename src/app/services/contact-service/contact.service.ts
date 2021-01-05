@@ -1,0 +1,281 @@
+import { Injectable } from '@angular/core';
+import { Observable, BehaviorSubject, throwError, of } from 'rxjs';
+import { Contact } from '../../models/contact.model';
+import { StorageService } from '../storage-service/storage.service';
+
+
+const CONTACTS = [
+  {
+    "_id": "5a56640269f443a5d64b32ca",
+    "name": "Ochoa Hyde",
+    "email": "ochoahyde@renovize.com",
+    "phone": "+1 (968) 593-3824",
+    "imgUrl": ""
+  },
+  {
+    "_id": "5a5664025f6ae9aa24a99fde",
+    "name": "Hallie Mclean",
+    "email": "halliemclean@renovize.com",
+    "phone": "+1 (948) 464-2888",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a56640252d6acddd183d319",
+    "name": "Parsons Norris",
+    "email": "parsonsnorris@renovize.com",
+    "phone": "+1 (958) 502-3495",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a566402ed1cf349f0b47b4d",
+    "name": "Rachel Lowe",
+    "email": "rachellowe@renovize.com",
+    "phone": "+1 (911) 475-2312",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a566402abce24c6bfe4699d",
+    "name": "Dominique Soto",
+    "email": "dominiquesoto@renovize.com",
+    "phone": "+1 (807) 551-3258",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a566402a6499c1d4da9220a",
+    "name": "Shana Pope",
+    "email": "shanapope@renovize.com",
+    "phone": "+1 (970) 527-3082",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a566402f90ae30e97f990db",
+    "name": "Faulkner Flores",
+    "email": "faulknerflores@renovize.com",
+    "phone": "+1 (952) 501-2678",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a5664027bae84ef280ffbdf",
+    "name": "Holder Bean",
+    "email": "holderbean@renovize.com",
+    "phone": "+1 (989) 503-2663",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a566402e3b846c5f6aec652",
+    "name": "Rosanne Shelton",
+    "email": "rosanneshelton@renovize.com",
+    "phone": "+1 (968) 454-3851",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a56640272c7dcdf59c3d411",
+    "name": "Pamela Nolan",
+    "email": "pamelanolan@renovize.com",
+    "phone": "+1 (986) 545-2166",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a5664029a8dd82a6178b15f",
+    "name": "Roy Cantu",
+    "email": "roycantu@renovize.com",
+    "phone": "+1 (929) 571-2295",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a5664028c096d08eeb13a8a",
+    "name": "Ollie Christian",
+    "email": "olliechristian@renovize.com",
+    "phone": "+1 (977) 419-3550",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a5664026c53582bb9ebe9d1",
+    "name": "Nguyen Walls",
+    "email": "nguyenwalls@renovize.com",
+    "phone": "+1 (963) 471-3181",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a56640298ab77236845b82b",
+    "name": "Glenna Santana",
+    "email": "glennasantana@renovize.com",
+    "phone": "+1 (860) 467-2376",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a56640208fba3e8ecb97305",
+    "name": "Malone Clark",
+    "email": "maloneclark@renovize.com",
+    "phone": "+1 (818) 565-2557",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a566402abb3146207bc4ec5",
+    "name": "Floyd Rutledge",
+    "email": "floydrutledge@renovize.com",
+    "phone": "+1 (807) 597-3629",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a56640298500fead8cb1ee5",
+    "name": "Grace James",
+    "email": "gracejames@renovize.com",
+    "phone": "+1 (959) 525-2529",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a56640243427b8f8445231e",
+    "name": "Tanner Gates",
+    "email": "tannergates@renovize.com",
+    "phone": "+1 (978) 591-2291",
+    "imgUrl": ""
+
+  },
+  {
+    "_id": "5a5664025c3abdad6f5e098c",
+    "name": "Lilly Conner",
+    "email": "lillyconner@renovize.com",
+    "phone": "+1 (842) 587-3812",
+    "imgUrl": ""
+
+  }
+];
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ContactService {
+
+  //mock the server
+  private _contacts: Contact[] = this.storageService.getFromStore('contacts') || CONTACTS;
+  private _contacts$ = new BehaviorSubject<any[]>(CONTACTS)
+  public contacts$ = this._contacts$.asObservable()
+
+  constructor(private storageService: StorageService) {
+
+  }
+
+  addImgToContact() {
+    this._contacts.forEach(contact => {
+      contact.imgUrl = `https://robohash.org/${contact.name}?set=set5`
+    });
+    this.storageService.setToStore('contacts', this._contacts)
+  }
+
+
+  public loadContacts(filterBy = null): void {
+    this.addImgToContact()
+    // let contacts = this._contacts$.getValue();
+    let contacts = this._contacts;
+    if (filterBy) {
+      contacts = this._filter(contacts, filterBy.searchTerm)
+    } else {
+      contacts = this._contacts
+    }
+    this._contacts$.next(this._sort(contacts))
+  }
+
+  public getContactById(id: string): Observable<Contact> {
+    //mock the server work
+    const contact = this._contacts.find((contact) => contact._id === id);
+
+    //return an observable
+    return contact ? of(contact) : throwError(`Contact id ${id} not found!`)
+  }
+
+  public getEmptyContact() {
+    return {
+      name: '', phone: '', email: '', imgUrl: ''
+    }
+  }
+
+  public deleteContact(id: string) {
+    //mock the server work
+    this._contacts = this._contacts.filter((contact) => contact._id !== id);
+    const idx = this._contacts.findIndex(contact => contact._id === id)
+    this._contacts.splice(1, idx)
+    // change the observable data in the service - let all the subscribers know4
+    this.storageService.setToStore('contacts', this._contacts)
+    this._contacts$.next(this._contacts);
+  }
+
+  public saveContact(contact: Contact) {
+    return contact._id ? this._updateContact(contact) : this._addContact(contact)
+  }
+
+  private _updateContact(contact: Contact) {
+
+    //mock the server work
+    this._contacts = this._contacts.map((c) =>
+    contact._id === c._id ? contact : c);    
+    // change the observable data in the service - let all the subscribers know
+    this.storageService.setToStore('contacts', this._contacts)
+    this._contacts$.next(this._sort(this._contacts))
+    return of(contact)
+
+  }
+
+  private _addContact(contact: Contact) {
+    //mock the server work
+    const newContact = new Contact(undefined, contact.name, contact.email, contact.phone, contact.imgUrl);
+    newContact.setId();
+    newContact.setContactImg();
+    // const contacts = [...this._contacts$.getValue(), newContact]
+    this._contacts.push(newContact as any)
+    this.storageService.setToStore('contacts', this._contacts)
+    this._contacts$.next(this._sort(this._contacts))
+    return of(newContact)
+  }
+
+  private _sort(contacts: Contact[]): Contact[] {
+    return contacts.sort((a, b) => {
+      if (a.name.toLocaleLowerCase() < b.name.toLocaleLowerCase()) {
+        return -1;
+      }
+      if (a.name.toLocaleLowerCase() > b.name.toLocaleLowerCase()) {
+        return 1;
+      }
+      return 0;
+    })
+  }
+
+  private _filter(contacts, term) {
+    term = term.toLocaleLowerCase()
+    return contacts.filter(contact => {
+      return contact.name.toLocaleLowerCase().includes(term) ||
+        contact.phone.toLocaleLowerCase().includes(term) ||
+        contact.email.toLocaleLowerCase().includes(term)
+    })
+  }
+
+  getNextContactId(id) {
+    let contactIdx = CONTACTS.findIndex(contact => contact._id === id)
+    if (contactIdx === CONTACTS.length - 1) contactIdx = 0
+    else contactIdx++
+    return CONTACTS[contactIdx]._id
+  }
+
+  getPrevContactId(id) {
+    let contactIdx = CONTACTS.findIndex(contact => contact._id === id)
+    if (contactIdx === 0) contactIdx = CONTACTS.length - 1
+    else contactIdx--;
+    return CONTACTS[contactIdx]._id
+  }
+}

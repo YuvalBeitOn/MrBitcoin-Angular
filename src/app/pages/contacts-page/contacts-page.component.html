@@ -1,0 +1,7 @@
+<div class="contact-page flex column align-center">
+    <div class="contacts-control flex">
+        <contact-filter (setFilter)="setFilter($event)"></contact-filter>
+        <a routerLink="/contact/edit" routerLinkActive="router-link-active" class="add-contact">Add Contact</a>
+    </div>
+    <contact-list [contacts]="contacts"></contact-list>
+</div>

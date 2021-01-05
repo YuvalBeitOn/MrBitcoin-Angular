@@ -1,0 +1,22 @@
+<div class="user-info flex column">
+    <img class="user-img" src={{user.imgUrl}} alt="user-img" />
+    <!-- <div class="user-container flex align-center">
+        <span class="user-title">Hello {{user.name}}!</span>
+
+    </div> -->
+
+
+    <div class="user-container flex align-center">
+        <div class="online-sign" [class.online]="isOnline" [class.offline]="!isOnline" (mouseover)="handleMouseIn()"
+            (mouseout)="handleMouseOut()">
+            <div class="tool-tip" [style.display]="tooltipStyle" *ngIf="hover">{{toolTipTxt}}</div>
+        </div>
+        <span class="user-title">Hello {{user.name}}!</span>
+    </div>
+
+    <span class="coins-txt flex align-center"><img class="coins-img" src="../../assets/icons/coins.png" alt="usd-img">
+        <span class="coin-txt">USD:</span> {{userUsdRate}}</span>
+    <span class="coins-txt flex align-center">
+        <img class="coins-img" src="../../assets/icons/bitcoin.png" alt="bitcoin-img">
+        <span class="coin-txt">BTC: </span> {{user.coins}}</span>
+</div>

@@ -1,0 +1,26 @@
+<section class="converter-container flex align-center justify-center">
+    <form class="convert-form flex column space-between align-center" (submit)="onConvert($event)">
+        <div>
+            <input type="number" [(ngModel)]="bitcoin" name="bitcoin" placeholder="Enter amount"
+                spellCheck="false" />
+            <span class="from-currency">BTC</span>
+            <i class="fas fa-arrow-right fa-icon"></i>
+            <select class="form-control" type="text" name="toCurr" [(ngModel)]="toCurr" required>
+                <option>USD</option>
+                <option>GBP</option>
+                <option>EUR</option>
+                <option>CAD</option>
+            </select>
+        </div>
+        <span class="validation-error">{{errMsg}}</span>
+       
+        <div class="result">
+            <span class="given-amount">{{bitcoin}}</span>
+            <span class="base-currency">BTC</span>
+            <i class="fas fa-arrow-right fa-icon"></i>
+            <span class="final-result">{{res}}</span>
+            <span class="second-currency">{{toCurr}}</span>
+        </div>
+        <button class="calculate-btn" type="submit">Convert</button>
+    </form>
+</section>

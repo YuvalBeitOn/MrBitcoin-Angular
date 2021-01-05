@@ -1,0 +1,26 @@
+<section class="statistcs-page flex column align-center">
+    <h2 class="statistcs-title">Bitcoin Statistcs</h2>
+    <div class="market-price-chart flex column align-center mb40" *ngIf="marketPrices.length; else loading">
+        <h2 lass="mb8">Market Price</h2>
+        <h4 class="mb20">The average USD market price across major bitcoin exchanges.</h4>
+        <chart [data]="marketPrices"></chart>
+    </div>
+
+    <div class="confirmed-trans-chart flex column align-center mb40">
+        <h2 class="mb8">Exchange Trade Volume (USD)</h2>
+        <h4 class="mb20">The total USD value of trading volume on major bitcoin exchanges.</h4>
+        <chart [data]="confirmedTrans"></chart>
+    </div>
+
+    <div class="trade-volume-chart flex column align-center">
+        <h2 class="mb8">Average Block Size</h2>
+        <h4 class="mb20">The average block size over the past 24 hours in megabytes.</h4>
+        <chart [data]="tradeVolume"></chart>
+    </div>
+</section>
+
+<ng-template #loading>
+    <div class="loading-container flex justify-center align-center">
+        <img class="loading" src="./assets/img/loader.gif" alt="loading">
+    </div>
+</ng-template>

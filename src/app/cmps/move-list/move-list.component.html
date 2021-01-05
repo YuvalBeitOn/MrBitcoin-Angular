@@ -1,0 +1,5 @@
+<ul class="moves-list clean-list" *ngIf="moves.length">
+    <h2 class="move-list-title">Your Moves:</h2>
+    <move-preview *ngFor="let move of moves" [move]="move" [isInContact]="isInContact"></move-preview>
+</ul>
+<div class="no-moves" *ngIf="!moves.length">No Moves yet...</div>

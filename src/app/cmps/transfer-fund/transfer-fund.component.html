@@ -1,0 +1,15 @@
+<section class="transfer-fund flex column">
+    <span class="transfer-title">Transfer coins to {{contactName}}: </span>
+    <form class="transfer-form" (submit)="onTransferFund()">
+        <input
+            name="fund"
+            type="number"
+            [(ngModel)]="fund"
+            spellCheck="false"
+            placeholder="Amount to transfer"
+        />
+        <button type="submit" class="transfer-btn">Transfer</button>
+    </form>
+    <div class="user-msg err-msg" *ngIf="errMsg">{{errMsg}}</div>
+   <div class="user-msg success-msg" *ngIf="successMsg">{{successMsg}}</div>
+</section>

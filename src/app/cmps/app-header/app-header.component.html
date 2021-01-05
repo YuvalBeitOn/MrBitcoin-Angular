@@ -1,0 +1,17 @@
+<section class="app-header">
+    <div class="nav-container flex align-center space-between container">
+        <button (click)="toggleNav()" class="bars">
+            <i class="fas fa-bars fa-icon"></i>
+        </button>
+        <nav class="nav-bar flex align-center" [class.showen]="isMenuOpen">
+            <a routerLink="" class="main-title">Mr Bitcoin</a>
+            <a routerLink="/home">Home</a>
+            <a routerLink="/contacts">Contacts</a>
+            <a routerLink="/statistic">Statistic</a>
+        </nav>
+        <div class="login-section flex align-center space-between">
+            <a class="profile"  routerLink="/userProfile" *ngIf="user">Profile</a>
+            <a routerLink="/signup" class="get-started">Get Started</a>
+        </div>
+    </div>
+</section>

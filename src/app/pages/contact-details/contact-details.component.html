@@ -1,0 +1,31 @@
+<section class="contact-details-page flex justify-center">
+    <div class="contact-details-container flex space-between column">
+        <div class="contact-details flex column">
+            <img src={{contact.imgUrl}} alt="contact-img" />
+            <span>Id: {{contact._id}}</span>
+            <span>Name: {{contact.name}}</span>
+            <span>E-mail: {{contact.email}}</span>
+            <span>Phone: {{contact.phone}}</span>
+        </div>
+        <div class="btns-section">
+            <div class="crus-btns">
+                <a routerLink="/contacts">Back</a>
+                <a key="contact._id" [routerLink]="['/contact/edit',contact._id]"
+                    routerLinkActive="router-link-edit">Edit</a>
+                <button class="btn" (click)="deleteContact()">Delete</button>
+            </div>
+            <div class="next-prev-btns flex">
+                <button class="btn flex align-center" (click)="onPrevContact()"><i
+                        class="fas fa-arrow-left fa-icon prev"></i>
+                    Prev</button>
+                <button class="btn flex align-center" (click)="onNextContact()">Next<i
+                        class="fas fa-arrow-right fa-icon next"></i></button>
+            </div>
+        </div>
+    </div>
+    <section class="transfer-section">
+        <transfer-fund [maxCoins]="user.coins" [contactName]="contact.name"
+            (handleTransfer)="handleTransfer($event)"></transfer-fund>
+        <move-list *ngIf="userMoves.length" [moves]="userMoves" [contactId]="contact._id" [isInContact]="true"></move-list>
+    </section>
+</section>
